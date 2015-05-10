@@ -1,0 +1,23 @@
+{
+  "name": "salestax-monitor",
+  "version": "1.0.0",
+  "description": "salestax-monitor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/senecajs/salestax-monitor.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/senecajs/salestax-monitor/issues"
+  },
+  "homepage": "https://github.com/senecajs/salestax-monitor",
+  "dependencies": {
+    "influx": "^3.4.0",
+    "seneca": "^0.6.1"
+  }
+}
