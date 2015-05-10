@@ -10,13 +10,20 @@ var influx = require('influx')({
 })
 
 
+var expected = {
+  basic: 120
+}
+
 setInterval(function(){
+
+  // basic
   seneca.act('role:salestax,cmd:calculate,net:100',function(err,out){
     influx.writePoint(
       'salestax_calculate', 
-      { time:new Date(), value:(!err && 121===out.total)?1:0 }, 
+      { time:new Date(), value:(!err && expected.basic===out.total)?1:0 }, 
       function(err){ if(err) console.log(err); })
   })
+
 },555)
 
 
