@@ -1,9 +1,24 @@
+var BS_PORT  = process.env.BS_PORT  || 11300
+var BS_HOST  = process.env.BS_HOST  || 'localhost'
+var WEB_PORT = process.env.WEB_PORT || 51000 
+var WEB_HOST = process.env.WEB_HOST || 'localhost' 
 
 var needle = require('needle')
 
 var seneca = require('seneca')({timeout:555})
-      .client({ pin:'role:salestax,cmd:calculate', port:51001 })
-      .client({ pin:'role:salestax,cmd:calculate,country:*', port:51002 })
+      .use('beanstalk-transport')
+      .client({
+        type: 'beanstalk',
+        pin:  'role:salestax,cmd:calculate',
+        port:  BS_PORT,
+        host:  BS_HOST
+      })
+      .client({
+        type: 'beanstalk',
+        pin:  'role:salestax,cmd:calculate,country:*',
+        port:  BS_PORT,
+        host:  BS_HOST
+      })
 
 var influx = require('influx')({
   host:     'localhost',
@@ -13,8 +28,6 @@ var influx = require('influx')({
 })
 
 
-var HOST = process.env.HOST || 'localhost' 
-var PORT = process.env.PORT || 51000 
 
 function check_service(test) {
   return function(err,out) {
@@ -47,12 +60,12 @@ setInterval(function(){
          check_service({name:'ie',val:121}))
 
   needle.get(
-    'http://'+HOST+':'+PORT+'/api/salestax?net=100',
+    'http://'+WEB_HOST+':'+WEB_PORT+'/api/salestax?net=100',
     check_api({name:'basic',val:120}))
 
   needle.get(
-    'http://'+HOST+':'+PORT+'/api/salestax?net=100&country=de',
-    check_api({name:'uk',val:119}))
+    'http://'+WEB_HOST+':'+WEB_PORT+'/api/salestax?net=100&country=de',
+    check_api({name:'de',val:119}))
 
 },555)
 
