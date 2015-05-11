@@ -1,7 +1,7 @@
 var BS_PORT  = process.env.BS_PORT  || 11300
 var BS_HOST  = process.env.BS_HOST  || 'localhost'
 
-var seneca = require('seneca')()
+var seneca = require('seneca')({timeout:555})
       .use('beanstalk-transport')
       .client({
         type: 'beanstalk',
