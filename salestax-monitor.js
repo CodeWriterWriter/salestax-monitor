@@ -67,6 +67,10 @@ setInterval(function(){
     'http://'+WEB_HOST+':'+WEB_PORT+'/api/salestax?net=100&country=de',
     check_api({name:'de',val:119}))
 
+  needle.get(
+    'http://'+WEB_HOST+':'+WEB_PORT+'/api/salestax?net=100&country=it',
+    check_api({name:'it',val:122}))
+
 },555)
 
 
